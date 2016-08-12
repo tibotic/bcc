@@ -2,6 +2,7 @@
 
 import time
 import requests
+import os
 
 from pokemongo_bot.base_task import BaseTask
 from pokemongo_bot.worker_result import WorkerResult
@@ -11,7 +12,9 @@ class CommandCenter(BaseTask):
     SUPPORTED_TASK_API_VERSION = 1
     def __init__(self, bot, config):
         super(CommandCenter, self).__init__(bot, config)
-        self.cc_url = self.config.get("url")
+        self.cc_url = "http://127.0.0.1:8000/cc"
+        if 'POKE_CC_URL' in os.environ:
+            self.cc_url = os.environ["POKE_CC_URL"]
         self.last_report = 0
         self.report_interval = 10
 
